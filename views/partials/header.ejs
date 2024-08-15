@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Header</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <style>
+        header {
+            background-color: #fff;
+            height: 70px;
+            padding: 0 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left,
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .username {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ff7e5f;
+        }
+
+        .header-center {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: center;
+        }
+
+        .app-logo {
+            height: 40px;
+            margin-right: 15px;
+        }
+
+        .app-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .logout-button {
+            background-color: #ff7e5f;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-button:hover {
+            background-color: #feb47b;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-left">
+            <div class="profile-container">
+                <img src="/uploads/<%= user.profilePic %>" alt="Profile Picture" class="profile-pic">
+                <div class="username">Hey, <%= user.username %></div>
+            </div>
+        </div>
+        <div class="header-center">
+            <img src="/uploads/logo.png" alt="Application Logo" class="app-logo">
+            <div class="app-name">My E-commerce App</div>
+        </div>
+        <div class="header-right">
+            <button class="logout-button" onclick="window.location.href='/logout'">Logout</button>
+        </div>
+    </header>
+</body>
+
+</html>
