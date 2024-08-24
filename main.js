@@ -2,6 +2,10 @@ console.clear();
 const express = require('express');
 const app = express();
 const port = 3000;
+
+//To read file
+const fs = require('fs');
+
 //To use session
 var session = require('express-session')
 
@@ -46,12 +50,23 @@ const userModel  = require("./database/modules/user.js");
 app.get('/',(req,res)=>{
   console.log(req.session.isLoggedIn);
     if(req.session.isLoggedIn){
-      // console.log("index par jayega");
-      res.render("index",{user: req.session.user});
+      console.log(req.session.product);
+       res.render("index",{user: req.session.user,products:req.session.product});
     }else{
-      // console.log("home par jayega");
       res.render('home');
     }
+})
+
+app.get("/home",(req,res)=>{
+  fs.readFile('products.js', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    req.session.product = JSON.parse(data);
+    // console.log(typeof req.session.product,req.session.product); 
+    res.redirect("/");
+  });
 })
 
 
@@ -116,8 +131,8 @@ app.post('/login',(req,res)=>{
   .then(function(user){
     req.session.isLoggedIn = true;
     req.session.user = user;
-    // console.log( req.session.user);
-    res.redirect("/");
+    //console.log(req.session.user);
+    res.redirect("/home");
   }).catch(function(){
     console.log("Kuch bhi thik na hai");
   })
