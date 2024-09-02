@@ -1,0 +1,35 @@
+//import mail service
+const mailjet = require('node-mailjet')
+    .apiConnect("6f5c11510b28e1002b85151d9c9882ee", "312347c1ed7429775aeb0d2f22c4fa9b");
+
+//If you are passing html then TextPart will be ignored
+module.exports = function sendMail(email, title, body,html,callback){
+    const request = mailjet
+    .post("send", { 'version': 'v3.1' })
+    .request({
+      "Messages": [
+        {
+          "From": {
+            "Email": "pankajsinghcs7068118829@gmail.com",
+            "Name": "E-Commerce: Where everything is branded"
+          },
+          "To": [
+            {
+              "Email": email,
+              "Name": "Pankaj"
+            }
+          ],
+          "Subject": title,
+          "TextPart": body,
+          "HTMLPart": html
+        }
+      ]
+    })
+  request
+    .then((result) => {
+      callback()
+    })
+    .catch((err) => {
+        callback(err)
+    })  
+}

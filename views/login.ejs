@@ -95,6 +95,11 @@
 </head>
 <body>
     <div class="login-container">
+        <% if(error){ %>
+            <h2>
+                <%= error %>
+            </h2>
+        <% } %>
         <img src="/uploads/logo.png" alt="Logo">
         <h2>Login to Your Account</h2>
         <form action="/login" method="POST">
