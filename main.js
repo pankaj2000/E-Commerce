@@ -177,6 +177,44 @@ app.get('/verifyEmail/:email',(req,res)=>{
 
 })
 
+app.route('/forgot-password').get((req,res)=>{
+  res.render('forgetPassword');
+}).post((req,res)=>{
+  var email = req.body.email;
+
+  var url = `<h3>Hi ${email},</h3><br><a href="http://localhost:3000/updatePassword/${email}">Please click to setup a new password</a>`
+  sendMail(email,"WelCome to e-commerce!!",`Hi ${email}, Please click to setup a new password`,url,function(err){
+    if(err){
+      //do error handling
+      res.render("signup", { error: "Issue occured while sending mail !!" });
+    }else{
+      res.redirect("/");
+    }
+  });
+})
+
+app.get('/updatePassword/:email',(req,res)=>{
+  const email=req.params.email;
+  res.render("updatePassword",{email:email});
+})
+
+app.post("/update-password/:email",(req,res)=>{
+    const email = req.params.email;
+    const password = req.body.password;
+    const confirmPassword = req.body.confirmPassword;
+
+    if(password != confirmPassword){
+      res.render("updatePassword",{email:email});
+      return;
+    }
+    
+    userModel.updateOne({email:email},{$set:{password: password}}).then(function(){
+      res.redirect("/");
+    })
+
+
+
+})
 
 app.listen(port, () => {
   console.log(`App is running at https://localhost:${port}`);
