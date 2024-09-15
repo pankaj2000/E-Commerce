@@ -85,6 +85,7 @@
             font-size: 14px;
             font-family: 'Roboto', sans-serif;
             transition: background-color 0.3s ease;
+            margin: 10px;
         }
 
         .logout-button:hover {
@@ -97,17 +98,32 @@
     <header>
         <div class="header-left">
             <div class="profile-container">
+                <% if(user){ %>
                 <img src="/uploads/<%= user.profilePic %>" alt="Profile Picture" class="profile-pic">
                 <div class="username">Hey, <%= user.username %></div>
+                <% }else{ %>
+                <div class="username">Hey, Please login!! </div>
+                 <% } %>
             </div>
         </div>
         <div class="header-center">
             <img src="/uploads/logo.png" alt="Application Logo" class="app-logo">
             <div class="app-name">My E-commerce App</div>
         </div>
+
+        <% if(user){ %>
         <div class="header-right">
+            <% if(user.userType==1){ %>
+            <button class="logout-button" onclick="window.location.href='/admin/adminDash/add-product'">Add Product</button>
+            <% } %>
+            <button class="logout-button" onclick="window.location.href='/cartView'">Cart</button>
             <button class="logout-button" onclick="window.location.href='/logout'">Logout</button>
         </div>
+        <%}else{%>
+        <div class="header-right">
+            <button class="logout-button" onclick="window.location.href='/login'">Login</button>
+        </div>
+        <%}%>
     </header>
 </body>
 

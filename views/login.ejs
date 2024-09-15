@@ -1,117 +1,183 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>E-commerce Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titt</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(to right, #ff7e5f, #feb47b);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-        }
-        .login-container {
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 350px;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .login-container img {
-            width: 100px;
-            margin-bottom: 20px;
-        }
-        .login-container h2 {
-            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FF6F61, #FFAB40);
             color: #333;
         }
-        .login-container form {
-            width: 100%;
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1100px;
+            background-color: #fff;
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            transform: scale(1);
+            transition: all 0.3s ease;
         }
-        .login-container input {
-            width: calc(100% - 32px);
+        .container:hover {
+            transform: scale(1.02);
+        }
+
+        /* Right Pane - Login Form (Moved to Right) */
+        .login-pane {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #f7f7f7;
+        }
+        .login-pane h2 {
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 28px;
+            color: #444;
+        }
+        .login-pane form {
+            display: flex;
+            flex-direction: column;
+        }
+        .login-pane input {
             padding: 15px;
-            margin: 10px 16px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            margin-bottom: 20px;
             font-size: 16px;
-            box-sizing: border-box;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            transition: border-color 0.3s ease;
         }
-        .login-container button {
-            width: calc(100% - 32px);
+        .login-pane input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .login-pane button {
             padding: 15px;
-            background-color: #ff7e5f;
+            font-size: 18px;
+            background-color: #FF6F61;
             color: #fff;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            margin: 10px 16px;
-            box-sizing: border-box;
             transition: background-color 0.3s ease;
+            font-weight: bold;
         }
-        .login-container button:hover {
-            background-color: #feb47b;
+        .login-pane button:hover {
+            background-color: #FF3D2E;
         }
-        .login-container .forgot-password,
-        .login-container .signup {
-            margin-top: 10px;
-        }
-        .login-container .forgot-password a,
-        .login-container .signup a {
-            color: #ff7e5f;
+        .login-pane a {
+            color: #FF6F61;
             text-decoration: none;
             font-size: 14px;
+            margin-top: 10px;
+            transition: color 0.3s ease;
         }
-        .login-container .forgot-password a:hover,
-        .login-container .signup a:hover {
+        .login-pane a:hover {
+            color: #FF3D2E;
             text-decoration: underline;
         }
-        .login-container .signup-button {
-            width: calc(100% - 32px);
-            padding: 15px;
-            background-color: #fff;
-            color: #ff7e5f;
-            border: 2px solid #ff7e5f;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 10px 16px;
-            box-sizing: border-box;
-            transition: background-color 0.3s ease, color 0.3s ease;
+        .social-login {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
         }
-        .login-container .signup-button:hover {
-            background-color: #ff7e5f;
+        .social-login a {
+            display: block;
+            padding: 12px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+            border-radius: 8px;
             color: #fff;
+            transition: opacity 0.3s ease;
+            text-decoration: none;
+        }
+        .social-login a:hover {
+            opacity: 0.85;
+        }
+        .social-login .google { background-color: #db4437; }
+
+        /* Left Pane - Logo and Admin Login (Moved to Left) */
+        .image-pane {
+            flex: 1;
+            position: relative;
+            background: url('/uploads/right-pane-image.png') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .image-pane img {
+            max-width: 120px;
+            border-radius: 50%;
+            margin-bottom: 30px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .image-pane .admin-login {
+            text-align: center;
+        }
+        .image-pane .admin-button {
+            padding: 14px 30px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+        }
+        .image-pane .admin-button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <% if(error){ %>
-            <h2>
-                <%= error %>
-            </h2>
-        <% } %>
-        <img src="/uploads/logo.png" alt="Logo">
-        <h2>Login to Your Account</h2>
-        <form action="/login" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
-        </form>
-        <div class="forgot-password">
-            <a href="/forgot-password">Forgot your password?</a>
+    <div class="container">
+        <!-- Left Pane (Now Right Pane) -->
+        <div class="image-pane">
+            <img src="/uploads/logo.png" alt="Company Logo">
+            <div class="admin-login">
+                <button class="admin-button" onclick="window.location.href='/admin/auth/login'">Login as Admin</button>
+            </div>
         </div>
-        <div class="signup">
-            <button class="signup-button" onclick="window.location.href='/signup'">Create an Account</button>
+
+        <!-- Right Pane (Now Left Pane) -->
+        <div class="login-pane">
+            <h2>Login..</h2>
+            <form action="/login" method="POST">
+                <input type="text" name="username" placeholder="Username or email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label><input type="checkbox"> Remember me</label>
+                    <a href="/forgot-password">Forgot password?</a>
+                </div>
+                <button type="submit">LOGIN</button>
+            </form>
+
+            <div class="social-login">
+                <p>or</p>
+                <a href="#" class="google">LOGIN WITH GOOGLE</a>
+            </div>
+            <a href="/signup">Register now</a>
         </div>
     </div>
 </body>

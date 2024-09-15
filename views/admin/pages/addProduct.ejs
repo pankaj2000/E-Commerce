@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(45deg, #007bff, #00c3ff);
+            color: #333;
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 700px;
+            background-color: #fff;
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            transform: scale(1);
+            transition: all 0.3s ease;
+        }
+        .container:hover {
+            transform: scale(1.02);
+        }
+        /* Product Creation Form */
+        .product-pane {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: #f7f7f7;
+        }
+        .product-pane h2 {
+            margin-bottom: 20px;
+            font-weight: 700;
+            font-size: 28px;
+            color: #444;
+            text-align: center;
+        }
+        .product-pane form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .product-pane .form-group {
+            width: 48%;
+            margin-bottom: 20px;
+        }
+        .product-pane input,
+        .product-pane textarea {
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            transition: border-color 0.3s ease;
+        }
+        .product-pane input:focus,
+        .product-pane textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .product-pane button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .product-pane button:hover {
+            background-color: #0056b3;
+        }
+        .product-pane a {
+            display: block;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+        .product-pane a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+        .full-width {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Product Creation Pane -->
+        <div class="product-pane">
+            <h2>Create Product</h2>
+            <form action="/admin/adminDash/create-product" method="POST" enctype="multipart/form-data" onsubmit="showAlert(event)">
+                <div class="form-group">
+                    <input type="text" name="productName" placeholder="Product Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="productPrice" placeholder="Product Price" required>
+                </div>
+                <div class="form-group">
+                    <input type="number" name="productQuantity" placeholder="Product Quantity" required>
+                </div>
+                <div class="form-group">
+                    <input type="file" name="productImage" required>
+                </div>
+                <div class="form-group full-width">
+                    <textarea name="productDescription" placeholder="Product Description" rows="4" required></textarea>
+                </div>
+                <div class="full-width">
+                    <button type="submit">Create Product</button>
+                </div>
+            </form>
+            <a href="/admin/adminDash/home">Back to home page</a>
+        </div>
+    </div>
+
+    <script>
+        function showAlert(event) {
+            event.preventDefault();  // Prevents the form from submitting immediately
+            alert("Product added successfully!!");
+            event.target.submit();  // Submits the form after the alert
+        }
+    </script>
+</body>
+</html>

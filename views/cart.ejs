@@ -7,6 +7,7 @@
     <title>E-commerce Index</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        /* General Styling */
         body {
             font-family: 'Roboto', sans-serif;
             margin: 0;
@@ -79,21 +80,6 @@
             margin-bottom: 40px;
         }
 
-        .content button {
-            padding: 15px 30px;
-            background-color: #ff7e5f;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .content button:hover {
-            background-color: #feb47b;
-        }
-
         .product-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -115,11 +101,6 @@
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .product h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
         .product img {
             max-width: 100%;
             height: 150px;
@@ -128,18 +109,38 @@
             margin-bottom: 10px;
         }
 
-        .product .price {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-
-        .product .button-group {
+        .product-info {
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
         }
 
-        .product button {
-            padding: 10px 20px;
+        .product-info h2 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .product-info .price {
+            font-size: 18px;
+            color: #fff;
+            margin: 0;
+        }
+
+        .action-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-controls button {
+            padding: 10px;
             background-color: #ff7e5f;
             color: #fff;
             border: none;
@@ -148,97 +149,120 @@
             font-size: 14px;
         }
 
-        .product button:hover {
+        .quantity-controls button:hover {
             background-color: #feb47b;
         }
 
-        /* Popup styling */
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #fff;
-            color: #333;
+        .quantity-display {
+            font-size: 18px;
+            padding: 0 10px;
+        }
+
+        .delete-button {
+            background-color: #ff4d4d;
+            padding: 10px;
+            color: white;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #ff3333;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            z-index: 2000;
         }
 
-        .popup h3 {
-            margin: 0;
-            font-size: 20px;
-            margin-bottom: 10px;
+        .action-buttons .continue-shopping:hover {
+            background-color: #ff7e5f;
         }
 
-        .popup p {
-            font-size: 16px;
-        }
-
-        .popup button {
+        .proceed-to-pay {
             margin-top: 20px;
-            padding: 10px 20px;
+            padding: 15px 30px;
             background-color: #ff7e5f;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
 
-        .popup button:hover {
+        .proceed-to-pay:hover {
             background-color: #feb47b;
-        }
-
-        /* Overlay styling */
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
         }
     </style>
 </head>
+
 <body>
     <%- include("partials/header", { user: user }) %>
 
     <div class="content">
-        <h1>Welcome to Our E-commerce Platform</h1>
-        <p>Your one-stop shop for all your needs. Discover the best deals and latest products right here!</p>
-        <button onclick="window.location.href='/shop'">Start Shopping</button>
-
-
+        <h1>Your cart items</h1>
+   
         <div class="product-grid">
             <% products.forEach(function(item) { %>
                 <div class="product">
                     <img src="/uploads/<%= item.productImage %>" alt="<%= item.productName %> Image">
-                    <h2><%= item.productName %></h2>
-                    <p class="price">$<%= item.productPrice %></p>
-                    <div class="button-group">
-                            <button class="addToCart" type="submit" id="<%= item._id %>">Add to Cart</button>
-                        <button onclick="showPopup('<%= item.productName %>', '<%= item.ProductDescription %>')">View Description</button>
+
+                    <!-- Product name and price in the same row -->
+                    <div class="product-info">
+                        <h2><%= item.productName %></h2>
+                        <p class="price">$<%= item.productPrice %></p>
+                    </div>
+
+                    <!-- Quantity controls and delete button in the same row -->
+                    <div class="action-row">
+                        <div class="quantity-controls">
+                            <button class="decrement">-</button>
+                            <span class="quantity-display"><%= item.quantity %></span>
+                            <button class="increment">+</button>
+                        </div>
+
+                        <!-- Add your delete logic here -->
+                        <form action="/cart/delete/<%= item._id %>" method="POST">
+                            <button class="delete-button" type="submit">Delete</button>
+                        </form>
                     </div>
                 </div>
             <% }); %>
         </div>
+
+        <!-- Proceed to pay button inside a form -->
+        <form action="/checkout" method="post">
+            <button class="proceed-to-pay" type="submit">Proceed to Pay and Complete Order</button>
+        </form>
     </div>
 
-    <!-- Popup -->
-    <div id="popup" class="popup">
-        <h3 id="popup-title"></h3>
-        <p id="popup-description"></p>
-        <button onclick="closePopup()">Close</button>
-    </div>
+ 
 
-    <!-- Overlay -->
-    <div id="overlay" class="overlay" onclick="closePopup()"></div>
+    <script>
+        document.querySelectorAll('.increment').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const display = document.querySelectorAll('.quantity-display')[index];
+                display.textContent = parseInt(display.textContent) + 1;
+            });
+        });
 
-    <script src="/script/index.js"></script>
+        document.querySelectorAll('.decrement').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const display = document.querySelectorAll('.quantity-display')[index];
+                const currentValue = parseInt(display.textContent);
+                if (currentValue > 1) {
+                    display.textContent = currentValue - 1;
+                }
+            });
+        });
+
+        // Delete button event listeners can be handled by the form submit or additional logic if needed.
+    </script>
+
 </body>
 
 </html>
